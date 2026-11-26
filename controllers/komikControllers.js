@@ -15,3 +15,24 @@ function normalizeKomik(body) {
 
     return data;
 }
+
+async function getAllKomik(req, res) {
+    try {
+        const komik = await Komik.findAll();
+        return res.status(200).json({ message: "Berhasil mengambil data komik", data: komik });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+async function getKomikById(req, res) {
+    try {
+        const komik = await Komik.findByPk(req.params.id);
+        if (!komik) {
+            return res.status(404).json({ message: "Komik tidak ditemukan" });
+        }
+        return res.status(200).json({ message: "Berhasil mengambil data komik", data: komik });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
