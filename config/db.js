@@ -13,3 +13,11 @@ const sequelize = new Sequelize(
         logging: false
     }
 );
+
+async function connectDatabase() {
+    await sequelize.authenticate();
+    await sequelize.sync();
+    console.log("Koneksi database berhasil");
+}
+
+module.exports = { sequelize, connectDatabase };
