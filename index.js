@@ -23,3 +23,21 @@ app.use((err, req, res, next) => {
         message: err.status ? err.message : "Terjadi kesalahan pada server"
     });
 });
+
+async function startServer() {
+    try {
+        await connectDatabase();
+        return app.listen(PORT, () => {
+            console.log(`Server berjalan di http://localhost:${PORT}`);
+        });
+    } catch (error) {
+        console.error("Server gagal dijalankan:", error.message);
+        process.exitCode = 1;
+    }
+}
+
+if (require.main === module) {
+    startServer();
+}
+
+module.exports = app;
